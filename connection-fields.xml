@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<connection-fields>
+	<field name="server" default-value="dbc.peaka.studio" label="Peaka DBC Server"
+		category="endpoint"
+		value-type="string"
+		editable="true" />
+	<field name="port" label="Port" category="endpoint" value-type="string" default-value="4567" />
+	<field name="authentication" label="Authentication" category="authentication"
+		value-type="selection" default-value="auth-pass">
+		<selection-group>
+			<option value="auth-pass" label="Peaka API Key" />
+		</selection-group>
+	</field>
+	<field name="password" label="Peaka API KEY" category="authentication" value-type="string"
+		secure="true">
+		<conditions>
+			<condition field="authentication" value="auth-pass" />
+		</conditions>
+	</field>
+</connection-fields>

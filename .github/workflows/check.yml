@@ -1,0 +1,22 @@
+name: Check
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node --test tests/*.test.cjs
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify published Peaka JDBC routing
+        run: |
+          curl --fail --silent --show-error --output "$RUNNER_TEMP/peaka-jdbc-1.2.0.jar" https://repo.maven.apache.org/maven2/com/peaka/peaka-jdbc/1.2.0/peaka-jdbc-1.2.0.jar
+          echo "a4641106fe45d65fdd3538fe23f7faee7facceb4508f2f0d85129a6577d14912  $RUNNER_TEMP/peaka-jdbc-1.2.0.jar" | shasum -a 256 --check
+          java --class-path "$RUNNER_TEMP/peaka-jdbc-1.2.0.jar" tests/VerifyDriver.java

@@ -1,0 +1,5 @@
+.DS_Store
+*.taco
+packaging_logs.txt
+.build/
+dist/
